@@ -101,7 +101,7 @@
             android:layout_marginTop="500dp"
             android:layout_marginEnd="8dp"
             android:lineSpacingExtra="4dp"
-            android:text="Welcome to our \nUrban Bus Tracking App"
+            android:text="Welcome User"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="#160E2C"

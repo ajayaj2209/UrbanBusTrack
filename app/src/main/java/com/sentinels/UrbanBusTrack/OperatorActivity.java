@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class MainHomeActivity extends AppCompatActivity {
+public class OperatorActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -32,7 +32,7 @@ public class MainHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mainhome);
+        setContentView(R.layout.activity_operatorhome);
 
         Toolbar mtoolbar = findViewById(R.id.main_toolbar);
         Button btn = findViewById(R.id.getstart);
@@ -130,7 +130,7 @@ public class MainHomeActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"HELP CLICKED!!",Toast.LENGTH_LONG).show();
                     return true;
                 case R.id.log:
-                    Intent intent2 = new Intent(getApplicationContext(),SignInTypeActivity.class);
+                    Intent intent2 = new Intent(getApplicationContext(),SignInActivity.class);
                     startActivity(intent2);
                     Toast.makeText(getApplicationContext(),"Logged out successfully",Toast.LENGTH_LONG).show();
                     return true;

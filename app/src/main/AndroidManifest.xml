@@ -21,8 +21,15 @@
             android:enabled="true"
             android:exported="true"></service>
 
+
+        <activity
+            android:name="com.sentinels.UrbanBusTrack.OperatorActivity"
+            android:exported="false" />
         <activity
             android:name="com.sentinels.UrbanBusTrack.MapActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.sentinels.UrbanBusTrack.SignInTypeActivity"
             android:exported="false" />
         <activity
             android:name="com.sentinels.UrbanBusTrack.SignInActivity"

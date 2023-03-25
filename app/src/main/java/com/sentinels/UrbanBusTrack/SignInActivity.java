@@ -54,6 +54,8 @@ public class SignInActivity extends AppCompatActivity {
         Button lgnBtn = (Button) findViewById(R.id.button2);
         // Set on Click Listener on Sign-in button
 
+        String type = getIntent().getStringExtra("type");
+
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
@@ -64,12 +66,7 @@ public class SignInActivity extends AppCompatActivity {
         // Configure Google Client
         configureGoogleClient();
 
-      btn.setOnClickListener(v -> loginUserAccount());
-
-//        btn.setOnClickListener(v -> {
-//            Intent intent = new Intent(getApplicationContext(),MainHomeActivity.class);
-//            startActivity(intent);
-//        });
+      btn.setOnClickListener(v -> loginUserAccount(type));
 
         lgnBtn.setOnClickListener(v -> {
             Intent intent2 = new Intent(getApplicationContext(),RegistrationActivity.class);
@@ -152,7 +149,7 @@ public class SignInActivity extends AppCompatActivity {
         Toast.makeText(SignInActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
-    private void loginUserAccount()
+    private void loginUserAccount(String type)
     {
         // Take the value of two edit texts in Strings
         String email, password;
@@ -188,9 +185,19 @@ public class SignInActivity extends AppCompatActivity {
 
 
                                 // if sign-in is successful
-                                // intent to home activity
-                                Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
-                                startActivity(intent);
+
+                                //if type is user go to mainhomeactivity, if operator go to operatoractivity
+                                if(type.equals("user")){
+                                    Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
+                                    startActivity(intent);
+                                }
+                                else if(type.equals("operator")){
+                                    Intent intent = new Intent(SignInActivity.this, OperatorActivity.class);
+                                    startActivity(intent);
+                                }
+
+//                                Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
+//                                startActivity(intent);
                             }
 
                             else {
