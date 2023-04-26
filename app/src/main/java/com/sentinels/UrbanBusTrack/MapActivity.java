@@ -2,9 +2,13 @@ package com.sentinels.UrbanBusTrack;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -29,9 +33,18 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.navigation.NavigationView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.Objects;
 
@@ -45,25 +58,26 @@ public class MapActivity extends AppCompatActivity implements
 //    CONSTANTS
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
+    Integer passenger1, passenger2;
+    String bno1,bno2;
 
 //    GLOBAL OBJECTS
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
+    FirebaseDatabase firebaseDatabase;
     private boolean permissionDenied = false;
-    private LocationListener listener;
     private GoogleMap map;
-    private Location location;
     private FusedLocationProviderClient fusedLocationClient;
     public static double latii,longii;
+
     public static double someLati,someLongi;
-    private LocationManager locationManager;
     private ActionBarDrawerToggle drawerToggle;
 
-    private double parsedLat =  LocationActivity.latitude != null ? LocationActivity.latitude :0;
-    private double parseLong = LocationActivity.longitude != null ? LocationActivity.longitude :0;
+    private double parsedLat;
+    private double parseLong;
 
-    private double parsedLat1 =  LocationActivity.latitude1 != null ? LocationActivity.latitude1 :0;
-    private double parseLong1 = LocationActivity.longitude1 != null ? LocationActivity.longitude1 :0;
+    private double parsedLat1;
+    private double parseLong1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +104,174 @@ public class MapActivity extends AppCompatActivity implements
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        // below line is used to get
+        // reference for our database
+
+        DatabaseReference  busInfo = firebaseDatabase.getInstance().getReference("BusInfo");
+        DatabaseReference mad1 = busInfo.child("Madurai 1");
+        DatabaseReference lat = mad1.child("BusLatitude");
+        DatabaseReference busno1 = mad1.child("BusNumber");
+        DatabaseReference lon = mad1.child("BusLongitude");
+        DatabaseReference pas = mad1.child("BusPopulation");
+
+        DatabaseReference mad2 = busInfo.child("Madurai 2");
+        DatabaseReference lat1 = mad2.child("BusLatitude");
+        DatabaseReference lon1 = mad2.child("BusLongitude");
+        DatabaseReference busno2 = mad2.child("BusNumber");
+        DatabaseReference pas1 = mad2.child("BusPopulation");
+
+        lat.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                latitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Latitude",latitude.toString());
+//                  String lati =  String.valueOf(latitude.get(latitude.size()-1));
+                String value = dataSnapshot.getValue(String.class);
+                parsedLat= Double.parseDouble(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lon.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                String value = dataSnapshot.getValue(String.class);
+                parseLong= Double.parseDouble(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        lon1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                String value = dataSnapshot.getValue(String.class);
+                parseLong1= Double.parseDouble(value);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        lat1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                latitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Latitude",latitude.toString());
+//                  String lati =  String.valueOf(latitude.get(latitude.size()-1));
+                String value = dataSnapshot.getValue(String.class);
+
+                parsedLat1= Double.parseDouble(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        pas.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                //set global passgenger 1 value to this
+                passenger1 = Integer.parseInt(dataSnapshot.getValue(String.class));
+                //call onmapready method here
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        busno1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                //set global passgenger 1 value to this
+                bno1= dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        busno2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                //set global passgenger 1 value to this
+                bno2= dataSnapshot.getValue(String.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        pas1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                //set global passgenger 1 value to this
+                passenger2 = Integer.parseInt(dataSnapshot.getValue(String.class));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(MapActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
         @SuppressLint("MissingPermission")
         private void enableMyLocation() {
@@ -129,6 +310,7 @@ public class MapActivity extends AppCompatActivity implements
         navigationView.setNavigationItemSelectedListener(
                 menuItem -> selectDrawerItem(menuItem));
     }
+
 
     public boolean selectDrawerItem(MenuItem menuItem) {
         switch(menuItem.getItemId()) {
@@ -264,8 +446,65 @@ public class MapActivity extends AppCompatActivity implements
             this.map.setOnMyLocationButtonClickListener(this);
             this.map.setOnMyLocationClickListener(this);
             this.map.setOnMapClickListener(this);
-            this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat,parseLong)).title("BUS 1"));
-            this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat1,parseLong1)).title("BUS 2"));
+            //int buspop1 = Integer.parseInt(passenger1);
+           // int buspop2 = Integer.parseInt(passenger2);
+            if(passenger1>5)
+            {
+                this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat,parseLong)).title(bno1+"("+passenger1+")").icon(BitmapFromVector(getApplicationContext(),R.drawable.ic_busred)));
+            }
+            if(passenger1<5 && passenger1>=2)
+            {
+                this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat,parseLong)).title(bno1+"("+passenger1+")").icon(BitmapFromVector(getApplicationContext(),R.drawable.ic_bus)));
+            }
+            if(passenger1<2)
+            {
+                this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat,parseLong)).title(bno1+"("+passenger1+")").icon(BitmapFromVector(getApplicationContext(),R.drawable.ic_busgreen)));
+            }
+            if(passenger2>5)
+            {
+                this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat1,parseLong1)).title(bno2+"("+passenger2+")").icon(BitmapFromVector(getApplicationContext(),R.drawable.ic_busred)));
+            }
+            if(passenger2<5 && passenger2>=2)
+            {
+                this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat1,parseLong1)).title(bno2+"("+passenger2+")").icon(BitmapFromVector(getApplicationContext(),R.drawable.ic_bus)));
+            }
+            if(passenger2<2)
+            {
+                this.map.addMarker(new MarkerOptions().position(new LatLng(parsedLat1,parseLong1)).title(bno2+"("+passenger2+")").icon(BitmapFromVector(getApplicationContext(),R.drawable.ic_busgreen)));
+            }
+
             enableMyLocation();
+        }
+
+        private BitmapDescriptor
+        BitmapFromVector(Context context, int vectorResId)
+        {
+            // below line is use to generate a drawable.
+            Drawable vectorDrawable = ContextCompat.getDrawable(
+                    context, vectorResId);
+
+            // below line is use to set bounds to our vector
+            // drawable.
+            vectorDrawable.setBounds(
+                    0, 0, vectorDrawable.getIntrinsicWidth(),
+                    vectorDrawable.getIntrinsicHeight());
+
+            // below line is use to create a bitmap for our
+            // drawable which we have added.
+            Bitmap bitmap = Bitmap.createBitmap(
+                    vectorDrawable.getIntrinsicWidth(),
+                    vectorDrawable.getIntrinsicHeight(),
+                    Bitmap.Config.ARGB_8888);
+
+            // below line is use to add bitmap in our canvas.
+            Canvas canvas = new Canvas(bitmap);
+
+            // below line is use to draw our
+            // vector drawable in canvas.
+            vectorDrawable.draw(canvas);
+
+            // after generating our bitmap we are returning our
+            // bitmap.
+            return BitmapDescriptorFactory.fromBitmap(bitmap);
         }
     }

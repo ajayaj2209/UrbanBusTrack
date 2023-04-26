@@ -63,9 +63,10 @@
                 android:lineSpacingExtra="4dp"
                 android:text="Madurai 1"
                 android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="#160E2C"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
                 app:layout_anchor="@+id/nestedScrollView"
                 app:layout_anchorGravity="bottom|center" />
 
@@ -79,10 +80,11 @@
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:text="LATITUDE : "
+                android:textColor="#0099FF"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="#160E2C"
-                android:textSize="20sp"
                 app:layout_anchor="@+id/loc"
                 app:layout_anchorGravity="bottom|center" />
 
@@ -107,6 +109,9 @@
                 android:layout_width="148dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:textColor="#0099FF"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="190dp"
                 android:layout_marginEnd="8dp"
@@ -114,8 +119,7 @@
                 android:text="LONGITUDE : "
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="#160E2C"
-                android:textSize="20sp"
+
                 app:layout_anchor="@+id/loc"
                 app:layout_anchorGravity="bottom|center" />
 
@@ -147,8 +151,10 @@
                 android:text="PASSENGERS: "
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="#160E2C"
+                android:textColor="#0099FF"
                 android:textSize="20sp"
+                android:textStyle="bold"
+
                 app:layout_anchor="@+id/loc"
                 app:layout_anchorGravity="bottom|center" />
 
@@ -179,9 +185,10 @@
                 android:lineSpacingExtra="4dp"
                 android:text="Madurai 2"
                 android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="#160E2C"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
                 app:layout_anchor="@+id/nestedScrollView"
                 app:layout_anchorGravity="bottom|center" />
 
@@ -194,11 +201,13 @@
                 android:layout_marginTop="390dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
+                android:textColor="#0099FF"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:text="LATITUDE : "
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="#160E2C"
-                android:textSize="20sp"
+
                 app:layout_anchor="@+id/loc"
                 app:layout_anchorGravity="bottom|center" />
 
@@ -225,12 +234,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="450dp"
+                android:textColor="#0099FF"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
+                android:textStyle="bold"
                 android:text="LONGITUDE : "
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="#160E2C"
                 android:textSize="20sp"
                 app:layout_anchor="@+id/loc"
                 app:layout_anchorGravity="bottom|center" />
@@ -263,8 +273,9 @@
                 android:text="PASSENGERS: "
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="#160E2C"
+                android:textColor="#0099FF"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_anchor="@+id/loc"
                 app:layout_anchorGravity="bottom|center" />
 
