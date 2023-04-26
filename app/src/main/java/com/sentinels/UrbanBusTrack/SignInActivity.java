@@ -151,6 +151,18 @@ public class SignInActivity extends AppCompatActivity {
 
     private void loginUserAccount(String type)
     {
+
+        //to be deleted at end
+        if(type.equals("user")){
+            Intent intent = new Intent(SignInActivity.this, MainHomeActivity.class);
+            startActivity(intent);
+        }
+        else if(type.equals("operator")){
+            Intent intent = new Intent(SignInActivity.this, OperatorActivity.class);
+            startActivity(intent);
+        }
+        //
+
         // Take the value of two edit texts in Strings
         String email, password;
         email = emailTextView.getText().toString();

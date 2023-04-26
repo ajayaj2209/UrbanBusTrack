@@ -43,7 +43,7 @@ public class LocationActivity extends AppCompatActivity {
     public static Double longitude1;
 
     DatabaseReference databaseReference;
-    private TextView Latitude,Longitude,Lat1,Long1;
+    private TextView Latitude,Longitude,Lat1,Long1,Pass1,Pass2;
 
     private ArrayList<Double> getCoord(Map<String,String> vals){
         ArrayList<Double> temp  =  new ArrayList<>();
@@ -63,19 +63,25 @@ public class LocationActivity extends AppCompatActivity {
         Longitude = findViewById(R.id.longitude);
         Lat1 = findViewById(R.id.latitude1);
         Long1 = findViewById(R.id.longitude1);
+        Pass1 = findViewById(R.id.pas1);
+        Pass2 = findViewById(R.id.pas2);
         // below line is used to get the instance
         // of our Firebase database.
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         // below line is used to get
         // reference for our database.
-        DatabaseReference  loc = firebaseDatabase.getInstance().getReference("bus1");
-        DatabaseReference lat = loc.child("latitude");
-        DatabaseReference lon = loc.child("longitude");
 
-        DatabaseReference  loc1 = firebaseDatabase.getInstance().getReference("bus2");
-        DatabaseReference lat1 = loc1.child("latitude");
-        DatabaseReference lon1 = loc1.child("longitude");
+        DatabaseReference  busInfo = firebaseDatabase.getInstance().getReference("BusInfo");
+        DatabaseReference mad1 = busInfo.child("Madurai 1");
+        DatabaseReference lat = mad1.child("BusLatitude");
+        DatabaseReference lon = mad1.child("BusLongitude");
+        DatabaseReference pas = mad1.child("BusPopulation");
+
+        DatabaseReference mad2 = busInfo.child("Madurai 2");
+        DatabaseReference lat1 = mad2.child("BusLatitude");
+        DatabaseReference lon1 = mad2.child("BusLongitude");
+        DatabaseReference pas1 = mad2.child("BusPopulation");
 
         lat.addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,6 +109,7 @@ public class LocationActivity extends AppCompatActivity {
 //                Log.d("Latitude",latitude.toString());
 //                  String lati =  String.valueOf(latitude.get(latitude.size()-1));
                 String value = dataSnapshot.getValue(String.class);
+
                 latitude1= Double.parseDouble(value);
                 Lat1.setText(value);
             }
@@ -152,6 +159,44 @@ public class LocationActivity extends AppCompatActivity {
                 Toast.makeText(LocationActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        pas.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                String value = dataSnapshot.getValue(String.class);
+                Pass1.setText(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(LocationActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        pas1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                longitude = getCoord((Map<String,String>)dataSnapshot.getValue());
+//                Log.d("Longitude",longitude.toString());
+//                String longi =  String.valueOf(longitude.get(longitude.size()-1));
+                String value = dataSnapshot.getValue(String.class);
+                Pass2.setText(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // calling on cancelled method when we receive
+                // any error or we are not able to get the data.
+                Toast.makeText(LocationActivity.this, "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         //databaseReference = firebaseDatabase.getReference("location");
         // calling method
         // for getting data.
@@ -281,7 +326,7 @@ public class LocationActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"HELP CLICKED!!",Toast.LENGTH_LONG).show();
                     return true;
                 case R.id.log:
-                    Intent intent2 = new Intent(getApplicationContext(),SignInActivity.class);
+                    Intent intent2 = new Intent(getApplicationContext(),SignInTypeActivity.class);
                     startActivity(intent2);
                     Toast.makeText(getApplicationContext(),"Logged out successfully",Toast.LENGTH_LONG).show();
                     return true;
@@ -293,5 +338,4 @@ public class LocationActivity extends AppCompatActivity {
             }
         }
     }
-
 }

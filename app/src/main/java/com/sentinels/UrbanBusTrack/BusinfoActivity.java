@@ -5,7 +5,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,26 +18,33 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import com.google.android.gms.common.SignInButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.Objects;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class OperatorActivity extends AppCompatActivity {
+import java.util.Objects;
+import java.util.logging.ConsoleHandler;
+
+public class BusinfoActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private Button btn;
 
     private ActionBarDrawerToggle drawerToggle;
+    FirebaseDatabase firebaseDatabase;
+    // Write a message to the database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_operatorhome);
+        setContentView(R.layout.activity_businfo);
 
         Toolbar mtoolbar = findViewById(R.id.main_toolbar);
-        Button btn = findViewById(R.id.getstart);
         setSupportActionBar(mtoolbar);
         // This will display an Up icon (<-), we will replace it with hamburger later
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -50,13 +59,46 @@ public class OperatorActivity extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(drawerToggle);
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
-
+        // Setup drawer view
         setupDrawerContent(nvDrawer);
 
-        btn.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(),LocationActivity.class);
-            startActivity(intent);
+        Button BusSubmit = findViewById(R.id.btnSubmit);
+        EditText busid = findViewById(R.id.BusId);
+        EditText busnumber = findViewById(R.id.BusNumber);
+        EditText busoperator = findViewById(R.id.BusOperator);
+        EditText busstartstop = findViewById(R.id.BusStart);
+        EditText busendstop = findViewById(R.id.BusEnd);
+
+        System.out.println("*********  "+((EditText)findViewById(R.id.BusId)).getText().toString()+"<==============================" );
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
+        BusSubmit.setOnClickListener(v -> {
+            //convert all above view to string
+                String busid1 = busid.getText().toString();
+                String busnumber1 = busnumber.getText().toString();
+                String busoperator1 = busoperator.getText().toString();
+                String busstartstop1 = busstartstop.getText().toString();
+                String busendstop1 = busendstop.getText().toString();
+
+                //    Toast.makeText(BusinfoActivity.this, "Bus ID: "+busid1+" Bus Number: "+busnumber1+" Bus Operator: "+busoperator1+" Bus Start Stop: "+busstartstop1+" Bus End Stop: "+busendstop1, Toast.LENGTH_SHORT).show();
+                //push the values to databse with bus id as parent and others as child
+                DatabaseReference myRef = database.getReference("BusInfo").child(busid1);
+                myRef.child("BusNumber").setValue(busnumber1);
+                myRef.child("BusOperator").setValue(busoperator1);
+                myRef.child("BusStartStop").setValue(busstartstop1);
+                myRef.child("BusPopulation").setValue("");
+                myRef.child("BusLatitude").setValue("");
+                myRef.child("BusLongitude").setValue("");
+
+                myRef.child("BusEndStop").setValue(busendstop1);
+                Toast.makeText(BusinfoActivity.this, "Bus Info Added Successfully", Toast.LENGTH_SHORT).show();
+
+
         });
+
+
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -78,25 +120,29 @@ public class OperatorActivity extends AppCompatActivity {
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-                menuItem -> {
-                    return selectDrawerItem(menuItem);
-                });
+                menuItem -> selectDrawerItem(menuItem));
     }
 
     public boolean selectDrawerItem(MenuItem menuItem) {
+
         switch(menuItem.getItemId()) {
-            case R.id.nav_1:
-                Toast.makeText(getApplicationContext(),"Already in Home!",Toast.LENGTH_LONG).show();
+            case R.id.nav_first_fragment:
+                Intent intent = new Intent(getApplicationContext(),MainHomeActivity.class);
+                startActivity(intent);
                 return true;
-            case R.id.nav_2:
-                Intent intent1 = new Intent(getApplicationContext(),BusinfoActivity.class);
+            case R.id.nav_second_fragment:
+                Intent intent1 = new Intent(getApplicationContext(),MapActivity.class);
                 startActivity(intent1);
                 return true;
+            case R.id.nav_third_fragment:
+                Intent intent2 = new Intent(getApplicationContext(),LocationActivity.class);
+                startActivity(intent2);
+            case R.id.nav_fourth_fragment:
+                Toast.makeText(getApplicationContext(),"Already in About Us!",Toast.LENGTH_LONG).show();
+                return true;
             default:
-
         }
 
-        // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
         // Set action bar title
         setTitle(menuItem.getTitle());
@@ -122,7 +168,7 @@ public class OperatorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"HELP CLICKED!!",Toast.LENGTH_LONG).show();
                     return true;
                 case R.id.log:
-                    Intent intent2 = new Intent(getApplicationContext(),SignInTypeActivity.class);
+                    Intent intent2 = new Intent(getApplicationContext(),SignInActivity.class);
                     startActivity(intent2);
                     Toast.makeText(getApplicationContext(),"Logged out successfully",Toast.LENGTH_LONG).show();
                     return true;

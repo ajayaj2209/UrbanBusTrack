@@ -26,6 +26,9 @@
             android:name="com.sentinels.UrbanBusTrack.OperatorActivity"
             android:exported="false" />
         <activity
+            android:name="com.sentinels.UrbanBusTrack.BusinfoActivity"
+            android:exported="false" />
+        <activity
             android:name="com.sentinels.UrbanBusTrack.MapActivity"
             android:exported="false" />
         <activity

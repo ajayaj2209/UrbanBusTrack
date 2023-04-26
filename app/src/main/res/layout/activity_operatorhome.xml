@@ -150,6 +150,6 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_view" />
+        app:menu="@menu/operator_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

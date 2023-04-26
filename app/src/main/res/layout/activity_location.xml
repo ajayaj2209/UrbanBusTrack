@@ -35,19 +35,19 @@
 
             <com.google.android.material.appbar.AppBarLayout
 
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:liftOnScroll="true">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/main_toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:menu="@menu/main_menu"
-                    app:title="BUS TRACKING"
-                    style="@style/Widget.MaterialComponents.Toolbar.Primary"
                     android:background="#0099FF"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"/>
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:menu="@menu/main_menu"
+                    app:title="BUS TRACKING" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -58,10 +58,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
-                android:text="BUS 1 - LOCATION"
+                android:text="Madurai 1"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="#160E2C"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="130dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:text="LATITUDE : "
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="190dp"
+                android:layout_marginTop="160dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:textAlignment="center"
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="230dp"
+                android:layout_marginTop="190dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:text="LONGITUDE : "
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="270dp"
+                android:layout_marginTop="220dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:textAlignment="center"
@@ -135,6 +135,38 @@
                 app:layout_anchor="@+id/loc"
                 app:layout_anchorGravity="bottom|center" />
 
+            <TextView
+                android:id="@+id/t1"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="250dp"
+                android:layout_marginEnd="8dp"
+                android:lineSpacingExtra="4dp"
+                android:text="PASSENGERS: "
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#160E2C"
+                android:textSize="20sp"
+                app:layout_anchor="@+id/loc"
+                app:layout_anchorGravity="bottom|center" />
+
+            <TextView
+                android:id="@+id/pas1"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="280dp"
+                android:layout_marginEnd="8dp"
+                android:lineSpacingExtra="4dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#160E2C"
+                android:textSize="20sp"
+                app:layout_anchor="@+id/loc"
+                app:layout_anchorGravity="bottom|center" />
 
             <TextView
                 android:id="@+id/loc1"
@@ -145,7 +177,7 @@
                 android:layout_marginTop="340dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
-                android:text="BUS 2 - LOCATION"
+                android:text="Madurai 2"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="#160E2C"
@@ -176,7 +208,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="430dp"
+                android:layout_marginTop="420dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:textAlignment="center"
@@ -192,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="470dp"
+                android:layout_marginTop="450dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:text="LONGITUDE : "
@@ -209,7 +241,40 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="50dp"
+                android:layout_marginTop="480dp"
+                android:layout_marginEnd="8dp"
+                android:lineSpacingExtra="4dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#160E2C"
+                android:textSize="20sp"
+                app:layout_anchor="@+id/loc"
+                app:layout_anchorGravity="bottom|center" />
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="510dp"
+                android:layout_marginEnd="8dp"
+                android:lineSpacingExtra="4dp"
+                android:text="PASSENGERS: "
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#160E2C"
+                android:textSize="20sp"
+                app:layout_anchor="@+id/loc"
+                app:layout_anchorGravity="bottom|center" />
+
+            <TextView
+                android:id="@+id/pas2"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="540dp"
                 android:layout_marginEnd="8dp"
                 android:lineSpacingExtra="4dp"
                 android:textAlignment="center"
@@ -220,6 +285,7 @@
                 app:layout_anchorGravity="bottom|center" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
         <FrameLayout
             android:id="@+id/flContent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"

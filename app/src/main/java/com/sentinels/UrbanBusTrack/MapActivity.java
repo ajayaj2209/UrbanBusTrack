@@ -176,7 +176,7 @@ public class MapActivity extends AppCompatActivity implements
                     Toast.makeText(getApplicationContext(),"HELP CLICKED!!",Toast.LENGTH_LONG).show();
                     return true;
                 case R.id.log:
-                    Intent intent2 = new Intent(getApplicationContext(),SignInActivity.class);
+                    Intent intent2 = new Intent(getApplicationContext(),SignInTypeActivity.class);
                     startActivity(intent2);
                     Toast.makeText(getApplicationContext(),"Logged out successfully",Toast.LENGTH_LONG).show();
                     return true;
